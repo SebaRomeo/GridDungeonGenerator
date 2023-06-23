@@ -31,7 +31,7 @@
             {
                 for (int posY = 0; posY < height; posY++)
                 {
-                    if (grid[originX + posX, originY + posY].RoomPart)
+                    if (grid[originX + posX, originY + posY].RoomPart || grid[originX + posX, originY + posY].Disabled)
                         return false;
                 }
             }
@@ -46,12 +46,36 @@
                 for (int f = 0; f < room.Height; f++)
                 {
                     room.AddSquare(grid[room.OriginX + i, room.OriginY + f]);
+                    List<Square> squareNeighbours = GetSquareNeighbours(grid[room.OriginX + i, room.OriginY + f]);
+                    foreach (Square square in squareNeighbours)
+                    {
+                        square.Disabled = true;
+                    }
                 }
             }
             room.AssigneSquareType();
             Rooms.Add(room);
+        }
 
-            // Disable neighbours to avoid rooms without separation
+        private List<Square> GetSquareNeighbours(Square square) 
+        {
+            List<Square> result = new List<Square>();
+
+            for (int x = -2; x <= 2; x++)
+            {
+                for (int y = -2; y <= 2; y++)
+                {
+                    if (x == 0 && y == 0)
+                        continue;
+
+                    int checkX = square.X + x;
+                    int checkY = square.Y + y;
+
+                    if (checkX >= 0 && checkX < grid.GetLength(0) && checkY >= 0 && checkY < grid.GetLength(1))
+                        result.Add(grid[checkX, checkY]);
+                }
+            }
+            return result;
         }
     }
 }

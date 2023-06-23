@@ -10,6 +10,8 @@
         internal int RoomX;
         internal int RoomY;
 
+        internal bool Disabled = false;
+
         internal Square(int x, int y)
         {
             X = x; 

@@ -8,6 +8,7 @@
             {
                 for (int y = 0; y < dungeon.grid.GetLength(1); y++)
                 {
+                    Console.ResetColor();
                     if (dungeon.grid[x, y].RoomPart)
                     {
                         if (dungeon.grid[x, y].RoomPartType == "door")
@@ -17,9 +18,13 @@
 
                         Console.Write('#');
                     }
+                    else if (dungeon.grid[x, y].Disabled) 
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write('X');
+                    }
                     else
                     {
-                        Console.ResetColor();
                         Console.Write('·');
                     }
 
