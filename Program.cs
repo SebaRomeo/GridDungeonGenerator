@@ -7,7 +7,7 @@
             Console.WriteLine("Dungeon Generator");
             Console.WriteLine();
 
-            int roomsNumber = 2;
+            int roomsNumber = 4;
 
             Dungeon dungeon = new Dungeon(25, 25);
             Random rnd = new Random();
@@ -16,15 +16,15 @@
 
             while (rooms < roomsNumber)
             {
-                int randX = rnd.Next(25);
-                int randY = rnd.Next(25);
+                int randX = rnd.Next(35);
+                int randY = rnd.Next(35);
 
                 int randSizeX = rnd.Next(5, 10);
                 int randSizeY = rnd.Next(5, 10);
 
                 if (dungeon.RoomFits(randX, randY, randSizeX, randSizeY))
                 {
-                    dungeon.AddRoom(randX, randY, randSizeX, randSizeY);
+                    dungeon.AddRoom(new Room(randX, randY, randSizeX, randSizeY));
                     rooms++;
                 }
             }

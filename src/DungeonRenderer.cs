@@ -8,11 +8,21 @@
             {
                 for (int y = 0; y < dungeon.grid.GetLength(1); y++)
                 {
-                    if (dungeon.grid[x, y].roomPart)
+                    if (dungeon.grid[x, y].RoomPart)
+                    {
+                        if (dungeon.grid[x, y].RoomPartType == "door")
+                            Console.ForegroundColor = ConsoleColor.Blue;
+                        else
+                            Console.ForegroundColor = ConsoleColor.Red;
+
                         Console.Write('#');
+                    }
                     else
+                    {
+                        Console.ResetColor();
                         Console.Write('·');
-                        
+                    }
+
                     Console.Write(' ');
                 }
                 Console.WriteLine();
