@@ -9,23 +9,22 @@
                 for (int y = 0; y < dungeon.Grid.GetLength(1); y++)
                 {
                     Console.ResetColor();
-                    if (dungeon.Grid[x, y].RoomPart)
+                    if (dungeon.Grid[x, y].IsPath) 
                     {
-                        if (dungeon.Grid[x, y].RoomPartType == "door")
-                            Console.ForegroundColor = ConsoleColor.Blue;
-                        else
-                            Console.ForegroundColor = ConsoleColor.Red;
-
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write('#');
                     }
-                    else if (dungeon.Grid[x, y].Disabled) 
+                    else if (dungeon.Grid[x, y].RoomPart)
                     {
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.Write('X');
+                        if (dungeon.Grid[x, y].RoomPartType == "door")
+                            Console.ForegroundColor = ConsoleColor.Red;
+                        else
+                            Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write('#');
                     }
                     else
                     {
-                        Console.Write('·');
+                        Console.Write(' ');
                     }
 
                     Console.Write(' ');

@@ -1,8 +1,19 @@
 ﻿namespace GridDungeonGenerator
 {
+    internal class Door
+    {
+        internal Square EntranceA;
+        internal Square EntranceB;
+
+        internal Door(Square a, Square b) 
+        {
+            EntranceA = a;
+            EntranceB = b;
+        }
+    }
+
     internal class Room
     {
-
         internal int OriginX;
         internal int OriginY;
         internal int Width;
@@ -12,6 +23,8 @@
         private Square[,] _squaresArray;
         private List<Square> _squares;
         private Random _rnd;
+
+        internal List<Door> Doors = new List<Door>();
 
         private List<string> _doorUsed = new List<string>
         {
@@ -69,6 +82,9 @@
                         int doorPosition = _rnd.Next(1, Height - 2);
                         _squaresArray[0, doorPosition].RoomPartType = "door";
                         _squaresArray[0, doorPosition + 1].RoomPartType = "door";
+
+                        Doors.Add(new Door(_squaresArray[0, doorPosition], _squaresArray[0, doorPosition + 1]));
+
                         _doorUsed.Remove("TOP");
                         DoorQuantity--;
                     }
@@ -77,6 +93,9 @@
                         int doorPosition = _rnd.Next(1, Height - 2);
                         _squaresArray[Width - 1, doorPosition].RoomPartType = "door";
                         _squaresArray[Width - 1, doorPosition + 1].RoomPartType = "door";
+
+                        Doors.Add(new Door(_squaresArray[Width - 1, doorPosition], _squaresArray[Width - 1, doorPosition + 1]));
+
                         _doorUsed.Remove("DOWN");                       
                         DoorQuantity--;
                     }
@@ -85,6 +104,9 @@
                         int doorPosition = _rnd.Next(1, Width - 2);
                         _squaresArray[doorPosition, Height - 1].RoomPartType = "door";
                         _squaresArray[doorPosition + 1, Height - 1].RoomPartType = "door";
+
+                        Doors.Add(new Door(_squaresArray[doorPosition, Height - 1], _squaresArray[doorPosition + 1, Height - 1]));
+
                         _doorUsed.Remove("RIGHT");
                         DoorQuantity--;
                     }
@@ -93,6 +115,9 @@
                         int doorPosition = _rnd.Next(1, Width - 2);
                         _squaresArray[doorPosition, 0].RoomPartType = "door";
                         _squaresArray[doorPosition + 1, 0].RoomPartType = "door";
+
+                        Doors.Add(new Door(_squaresArray[doorPosition, 0], _squaresArray[doorPosition + 1, 0]));
+
                         _doorUsed.Remove("LEFT");
                         DoorQuantity--;
                     }

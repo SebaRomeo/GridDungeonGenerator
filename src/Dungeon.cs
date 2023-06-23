@@ -57,13 +57,66 @@
             Rooms.Add(room);
         }
 
+        internal void ConnectRooms()
+        {
+            Pathfinder pathfinder = new Pathfinder();
+            Node[,] NodesArray = SquareToNodeArray();
+            Random rnd = new Random();
+
+            for (int i = 0; i < Rooms.Count - 1; i++)
+            {
+                Room startRoom = Rooms[i];
+                Room endRoom = Rooms[i+1];
+
+                Door doorsA = startRoom.Doors[rnd.Next(startRoom.Doors.Count)];
+                Door doorsB = endRoom.Doors[rnd.Next(endRoom.Doors.Count)];
+
+                Node startNode = NodesArray[doorsA.EntranceA.X, doorsA.EntranceA.Y];
+                Node endNode = NodesArray[doorsB.EntranceA.X, doorsB.EntranceA.Y];
+
+                List<Node> path = pathfinder.GetPath(NodesArray, startNode, endNode);
+
+                foreach (Node node in path)
+                {
+                    Grid[node.Position.X, node.Position.Y].Disabled = true;
+                    Grid[node.Position.X, node.Position.Y].IsPath = true;
+                }
+
+                Node startNode2 = NodesArray[doorsA.EntranceB.X, doorsA.EntranceB.Y];
+                Node endNode2 = NodesArray[doorsB.EntranceB.X, doorsB.EntranceB.Y];
+
+                List<Node> path2 = pathfinder.GetPath(NodesArray, startNode2, endNode2);
+
+                foreach (Node node in path2)
+                {
+                    Grid[node.Position.X, node.Position.Y].Disabled = true;
+                    Grid[node.Position.X, node.Position.Y].IsPath = true;
+                }
+            }
+        }
+
+        private Node[,] SquareToNodeArray() 
+        {
+            Node[,] result = new Node[Grid.GetLength(0), Grid.GetLength(1)];
+            foreach (Square square in Grid)
+            {
+                if (square.RoomPart && square.RoomPartType != "door") 
+                {
+                    square.Node.Walkable = false;
+                }
+
+                result[square.X, square.Y] = square.Node;
+            }
+            return result;
+        }
+
         private List<Square> GetSquareNeighbours(Square square) 
         {
             List<Square> result = new List<Square>();
 
-            for (int x = -4; x <= 4; x++)
+            for (int x = -2; x <= 2; x++)
             {
-                for (int y = -4; y <= 4; y++)
+                for (int y = -2; y <= 2; y++)
                 {
                     if (x == 0 && y == 0)
                         continue;

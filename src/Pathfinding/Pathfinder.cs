@@ -64,7 +64,7 @@ internal class Pathfinder
 
     private List<Node> GetNeighbours(Node[,] grid, Node node)
     {
-        List<Node> neighbours = new List<Node>();
+        List<Node> neighbours = new List<Node>();            
 
         for (int x = -1; x <= 1; x++)
         {
@@ -76,7 +76,7 @@ internal class Pathfinder
                 int checkX = node.Position.X + x;
                 int checkY = node.Position.Y + y;
 
-                if (checkX >= 0 && checkX < grid.GetLength(0) && checkY >= 0 && checkY < grid.GetLength(1))
+                if (checkX >= 0 && checkX < grid.GetLength(0) && checkY >= 0 && checkY < grid.GetLength(1) && (checkX == node.Position.X || checkY == node.Position.Y))
                     neighbours.Add(grid[checkX, checkY]);
             }
         }
