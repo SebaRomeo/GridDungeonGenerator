@@ -9,13 +9,16 @@
 
             int roomsNumber = 5;
             int rooms = 0;
-            Dungeon dungeon = new Dungeon(25, 50);
+            int dungeonSizeX = 50;
+            int dungeonSizeY = 50;
+
+            Dungeon dungeon = new Dungeon(dungeonSizeX, dungeonSizeY);
             Random rnd = new Random();
 
             while (rooms < roomsNumber)
             {
-                int randX = rnd.Next(25);
-                int randY = rnd.Next(50);
+                int randX = rnd.Next(dungeonSizeX);
+                int randY = rnd.Next(dungeonSizeX);
 
                 int randSizeX = rnd.Next(5, 10);
                 int randSizeY = rnd.Next(5, 10);

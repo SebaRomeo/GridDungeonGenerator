@@ -61,9 +61,9 @@
         {
             List<Square> result = new List<Square>();
 
-            for (int x = -2; x <= 2; x++)
+            for (int x = -4; x <= 4; x++)
             {
-                for (int y = -2; y <= 2; y++)
+                for (int y = -4; y <= 4; y++)
                 {
                     if (x == 0 && y == 0)
                         continue;
