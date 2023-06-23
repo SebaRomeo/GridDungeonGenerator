@@ -16,33 +16,22 @@
             }
         }
 
+        internal bool RoomFits(int originX, int originY, int width, int height) 
+        {
+            int x = originX + width;
+            int y = originY + height;
+
+            if (x >= grid.GetLength(0) || y >= grid.GetLength(1))
+                return false;
+
+            return true;
+        }
+
         internal void AddRoom(int originX, int originY, int width, int height)
         {
-            bool canBuild = true;
-
-            for (int i = 0; i <= width; i++)
+            for (int i = 0; i < width; i++)
             {
-                for (int f = 0; f <= height; f++)
-                {
-                    if (originX + i < 0 || originX + i > grid.GetLength(0)
-                        || originY + f < 0 || originY + f > grid.GetLength(1))
-                        {
-                            canBuild = false;
-                            break;
-                        }
-                }
-
-            }
-
-            if (!canBuild)
-            {
-                Console.WriteLine("Cant build room, there is no space");
-                return;
-            }
-
-            for (int i = 0; i <= width; i++)
-            {
-                for (int f = 0; f <= height; f++)
+                for (int f = 0; f < height; f++)
                 {
                     grid[originX + i, originY + f].roomPart = true;
                 }
