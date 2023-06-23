@@ -13,6 +13,8 @@
         private List<Square> _squares;
         private Random _rnd;
 
+        internal List<Square> Doors = new List<Square>();
+
         private List<string> _doorUsed = new List<string>
         {
             "TOP", "RIGHT", "DOWN", "LEFT"
@@ -69,6 +71,10 @@
                         int doorPosition = _rnd.Next(1, Height - 2);
                         _squaresArray[0, doorPosition].RoomPartType = "door";
                         _squaresArray[0, doorPosition + 1].RoomPartType = "door";
+
+                        Doors.Add(_squaresArray[0, doorPosition]);
+                        Doors.Add(_squaresArray[0, doorPosition + 1]);
+
                         _doorUsed.Remove("TOP");
                         DoorQuantity--;
                     }
@@ -77,6 +83,10 @@
                         int doorPosition = _rnd.Next(1, Height - 2);
                         _squaresArray[Width - 1, doorPosition].RoomPartType = "door";
                         _squaresArray[Width - 1, doorPosition + 1].RoomPartType = "door";
+
+                        Doors.Add(_squaresArray[Width - 1, doorPosition]);
+                        Doors.Add(_squaresArray[Width - 1, doorPosition + 1]);
+
                         _doorUsed.Remove("DOWN");                       
                         DoorQuantity--;
                     }
@@ -85,6 +95,10 @@
                         int doorPosition = _rnd.Next(1, Width - 2);
                         _squaresArray[doorPosition, Height - 1].RoomPartType = "door";
                         _squaresArray[doorPosition + 1, Height - 1].RoomPartType = "door";
+
+                        Doors.Add(_squaresArray[doorPosition, Height - 1]);
+                        Doors.Add(_squaresArray[doorPosition + 1, Height - 1]);
+
                         _doorUsed.Remove("RIGHT");
                         DoorQuantity--;
                     }
@@ -93,6 +107,10 @@
                         int doorPosition = _rnd.Next(1, Width - 2);
                         _squaresArray[doorPosition, 0].RoomPartType = "door";
                         _squaresArray[doorPosition + 1, 0].RoomPartType = "door";
+
+                        Doors.Add(_squaresArray[doorPosition, 0]);
+                        Doors.Add(_squaresArray[doorPosition + 1, 0]);
+
                         _doorUsed.Remove("LEFT");
                         DoorQuantity--;
                     }

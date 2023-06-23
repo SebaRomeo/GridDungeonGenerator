@@ -57,6 +57,51 @@
             Rooms.Add(room);
         }
 
+        //TODO Disable diagonal path
+
+        internal void ConnectRooms() 
+        {
+            Pathfinder pathfinder = new Pathfinder();
+            Node[,] NodesArray = SquareToNodeArray();
+
+            Node startNode = NodesArray[Rooms[0].Doors[0].X, Rooms[0].Doors[0].Y];
+            Node endNode = NodesArray[Rooms[2].Doors[0].X, Rooms[2].Doors[0].Y];
+
+            List<Node> path = pathfinder.GetPath(NodesArray, startNode, endNode);
+
+            foreach (Node node in path)
+            {
+                Grid[node.Position.X, node.Position.Y].Disabled = true;
+                Grid[node.Position.X, node.Position.Y].IsPath = true;
+            }
+
+            Node startNode2 = NodesArray[Rooms[0].Doors[1].X, Rooms[0].Doors[1].Y];
+            Node endNode2 = NodesArray[Rooms[2].Doors[1].X, Rooms[2].Doors[1].Y];
+
+            List<Node> path2 = pathfinder.GetPath(NodesArray, startNode2, endNode2);
+
+            foreach (Node node in path2)
+            {
+                Grid[node.Position.X, node.Position.Y].Disabled = true;
+                Grid[node.Position.X, node.Position.Y].IsPath = true;
+            }
+        }
+
+        private Node[,] SquareToNodeArray() 
+        {
+            Node[,] result = new Node[Grid.GetLength(0), Grid.GetLength(1)];
+            foreach (Square square in Grid)
+            {
+                if (square.RoomPart && square.RoomPartType != "door") 
+                {
+                    square.Node.Walkable = false;
+                }
+
+                result[square.X, square.Y] = square.Node;
+            }
+            return result;
+        }
+
         private List<Square> GetSquareNeighbours(Square square) 
         {
             List<Square> result = new List<Square>();

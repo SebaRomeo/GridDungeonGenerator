@@ -30,7 +30,7 @@
                 }
             }
 
-            //Dungeon.ConnectRooms();
+            dungeon.ConnectRooms();
 
             DungeonRenderer.DrawDungeon(dungeon);
 
