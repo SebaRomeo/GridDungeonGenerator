@@ -2,59 +2,61 @@
 {
     internal class Room
     {
-        private List<Square> Squares;
 
         internal int OriginX;
         internal int OriginY;
         internal int Width;
         internal int Height;
+        internal int DoorQuantity;
 
-        internal int DoorQuantity = 2;
+        private Square[,] _squaresArray;
+        private List<Square> _squares;
+        private Random _rnd;
 
-        List<string> DoorUsed = new List<string>
+        private List<string> _doorUsed = new List<string>
         {
-        "TOP", "RIGHT", "DOWN", "LEFT"
+            "TOP", "RIGHT", "DOWN", "LEFT"
         };
-
-        internal Square[,] squaresArray;
 
         internal Room(int originX, int originY, int width, int height)
         {
+            _rnd = new Random();
+            DoorQuantity = _rnd.Next(1, 5);
+
             OriginX = originX;
             OriginY = originY;
             Width = width;
             Height = height;
 
-            Squares = new List<Square>();
-            squaresArray = new Square[Width, Height];
+            _squares = new List<Square>();
+            _squaresArray = new Square[Width, Height];
         }
 
         internal void AddSquare(Square square)
         {
             square.RoomPart = true;
-            Squares.Add(square);
+            _squares.Add(square);
         }
 
         internal void AssigneSquareType()
         {
-            Random rnd = new Random();
             int squareIndex = 0;
             for (int x = 0; x < Width; x++)
             {
                 for (int i = 0; i < Height; i++)
                 {
-                    Squares[squareIndex].RoomX = x;
-                    Squares[squareIndex].RoomY = i;
-                    squaresArray[x, i] = Squares[squareIndex];
+                    _squares[squareIndex].RoomX = x;
+                    _squares[squareIndex].RoomY = i;
+                    _squaresArray[x, i] = _squares[squareIndex];
                     squareIndex++;
                 }
             }
 
-            foreach (Square square in Squares)
+            for (int i = 0; i < _squares.Count; i++)
             {
                 if (DoorQuantity > 0)
                 {
-                    int doorType = rnd.Next(0, 4);
+                    int doorType = _rnd.Next(0, 4);
                     /*
                         0 = TOP
                         1 = DOWN
@@ -62,33 +64,37 @@
                         3 = LEFT
                     */
 
-                    if (doorType == 0 && DoorUsed.Contains("TOP"))
+                    if (doorType == 0 && _doorUsed.Contains("TOP"))
                     {
-                        int doorPosition = rnd.Next(1, Height - 2);
-                        squaresArray[0, doorPosition].RoomPartType = "door";
-                        squaresArray[0, doorPosition + 1].RoomPartType = "door";
-                        DoorUsed.Remove("TOP");
+                        int doorPosition = _rnd.Next(1, Height - 2);
+                        _squaresArray[0, doorPosition].RoomPartType = "door";
+                        _squaresArray[0, doorPosition + 1].RoomPartType = "door";
+                        _doorUsed.Remove("TOP");
+                        DoorQuantity--;
                     }
-                    else if (doorType == 1 && DoorUsed.Contains("DOWN"))
+                    else if (doorType == 1 && _doorUsed.Contains("DOWN"))
                     {
-                        int doorPosition = rnd.Next(1, Height - 2);
-                        squaresArray[Width - 1, doorPosition].RoomPartType = "door";
-                        squaresArray[Width - 1, doorPosition + 1].RoomPartType = "door";
-                        DoorUsed.Remove("DOWN");
+                        int doorPosition = _rnd.Next(1, Height - 2);
+                        _squaresArray[Width - 1, doorPosition].RoomPartType = "door";
+                        _squaresArray[Width - 1, doorPosition + 1].RoomPartType = "door";
+                        _doorUsed.Remove("DOWN");                       
+                        DoorQuantity--;
                     }
-                    else if (doorType == 2 && DoorUsed.Contains("RIGHT"))
+                    else if (doorType == 2 && _doorUsed.Contains("RIGHT"))
                     {
-                        int doorPosition = rnd.Next(1, Width - 2);
-                        squaresArray[doorPosition, Height - 1].RoomPartType = "door";
-                        squaresArray[doorPosition + 1, Height - 1].RoomPartType = "door";
-                        DoorUsed.Remove("RIGHT");
+                        int doorPosition = _rnd.Next(1, Width - 2);
+                        _squaresArray[doorPosition, Height - 1].RoomPartType = "door";
+                        _squaresArray[doorPosition + 1, Height - 1].RoomPartType = "door";
+                        _doorUsed.Remove("RIGHT");
+                        DoorQuantity--;
                     }
-                    else if (doorType == 3 && DoorUsed.Contains("LEFT"))
+                    else if (doorType == 3 && _doorUsed.Contains("LEFT"))
                     {
-                        int doorPosition = rnd.Next(1, Width - 2);
-                        squaresArray[doorPosition, 0].RoomPartType = "door";
-                        squaresArray[doorPosition + 1, 0].RoomPartType = "door";
-                        DoorUsed.Remove("LEFT");
+                        int doorPosition = _rnd.Next(1, Width - 2);
+                        _squaresArray[doorPosition, 0].RoomPartType = "door";
+                        _squaresArray[doorPosition + 1, 0].RoomPartType = "door";
+                        _doorUsed.Remove("LEFT");
+                        DoorQuantity--;
                     }
                 }
             }

@@ -8,11 +8,9 @@
             Console.WriteLine();
 
             int roomsNumber = 5;
-
+            int rooms = 0;
             Dungeon dungeon = new Dungeon(25, 50);
             Random rnd = new Random();
-
-            int rooms = 0;
 
             while (rooms < roomsNumber)
             {

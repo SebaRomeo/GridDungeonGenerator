@@ -2,18 +2,18 @@
 {
     internal class Dungeon
     {
-        internal Square[,] grid;
+        internal Square[,] Grid;
         internal List<Room> Rooms;
 
         internal Dungeon(int width, int height)
         {
-            grid = new Square[width, height];
+            Grid = new Square[width, height];
             Rooms = new List<Room>();
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
                 {
-                    grid[x, y] = new Square(x, y);
+                    Grid[x, y] = new Square(x, y);
                 }
             }
         }
@@ -23,15 +23,15 @@
             int x = originX + width;
             int y = originY + height;
 
-            if (x >= grid.GetLength(0) || y >= grid.GetLength(1) || originX <= 1 || originY <= 1
-                || originX + width + 2 >= grid.GetLength(0) || originY + height + 2 >= grid.GetLength(1))
+            if (x >= Grid.GetLength(0) || y >= Grid.GetLength(1) || originX <= 1 || originY <= 1
+                || originX + width + 2 >= Grid.GetLength(0) || originY + height + 2 >= Grid.GetLength(1))
                 return false;
 
             for (int posX = 0; posX < width; posX++)
             {
                 for (int posY = 0; posY < height; posY++)
                 {
-                    if (grid[originX + posX, originY + posY].RoomPart || grid[originX + posX, originY + posY].Disabled)
+                    if (Grid[originX + posX, originY + posY].RoomPart || Grid[originX + posX, originY + posY].Disabled)
                         return false;
                 }
             }
@@ -45,8 +45,8 @@
             {
                 for (int f = 0; f < room.Height; f++)
                 {
-                    room.AddSquare(grid[room.OriginX + i, room.OriginY + f]);
-                    List<Square> squareNeighbours = GetSquareNeighbours(grid[room.OriginX + i, room.OriginY + f]);
+                    room.AddSquare(Grid[room.OriginX + i, room.OriginY + f]);
+                    List<Square> squareNeighbours = GetSquareNeighbours(Grid[room.OriginX + i, room.OriginY + f]);
                     foreach (Square square in squareNeighbours)
                     {
                         square.Disabled = true;
@@ -71,8 +71,8 @@
                     int checkX = square.X + x;
                     int checkY = square.Y + y;
 
-                    if (checkX >= 0 && checkX < grid.GetLength(0) && checkY >= 0 && checkY < grid.GetLength(1))
-                        result.Add(grid[checkX, checkY]);
+                    if (checkX >= 0 && checkX < Grid.GetLength(0) && checkY >= 0 && checkY < Grid.GetLength(1))
+                        result.Add(Grid[checkX, checkY]);
                 }
             }
             return result;
