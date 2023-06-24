@@ -1,19 +1,10 @@
-<!-- markdownlint-configure-file {
-  "MD013": {
-    "code_blocks": false,
-    "tables": false
-  },
-  "MD033": false,
-  "MD041": false
-} -->
-
 <div align="center">
 
 # Grid Dungeon Generator
 
 ![C#](https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=c-sharp&logoColor=white)
 
-A simple grid based dungeon generator for games. Still in progress.
+A simple <b>grid based dungeon</b> generator for games
 
 </div>
 
@@ -64,7 +55,7 @@ A simple grid based dungeon generator for games. Still in progress.
 | Properties      | Description                                   |
 | --------------- | --------------------------------------------- |
 | X               | Row where the square is positioned            |
-| Y               | Row where the square is positioned            |
+| Y               | Column where the square is positioned         |
 | IsWall          | Property that defines if the square is a wall |
 | RoomPart        | Property that defines if the square is floor  |
   
