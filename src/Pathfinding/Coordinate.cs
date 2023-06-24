@@ -1,11 +1,14 @@
-﻿internal class Coordinate
+﻿namespace GridDungeonGenerator.Pathfinding
 {
-    internal int X;
-    internal int Y;
-
-    internal Coordinate(int x, int y) 
+    internal class Coordinate
     {
-        X = x;
-        Y = y;
+        internal int X;
+        internal int Y;
+
+        internal Coordinate(int x, int y)
+        {
+            X = x;
+            Y = y;
+        }
     }
 }

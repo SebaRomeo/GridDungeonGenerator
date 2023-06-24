@@ -1,86 +1,88 @@
-internal class Pathfinder
+namespace GridDungeonGenerator.Pathfinding
 {
-    internal List<Node>? GetPath(Node[,] grid, Node startRoom, Node endRoom)
+    internal class Pathfinder
     {
-        Heap<Node> openSet = new Heap<Node>(grid.GetLength(0) * grid.GetLength(1));
-        HashSet<Node> closedSet = new HashSet<Node>();
-
-        openSet.Add(startRoom);
-
-        while (openSet.Count > 0)
+        internal List<Node>? GetPath(Node[,] grid, Node startRoom, Node endRoom)
         {
-            Node currentRoom = openSet.RemoveFirst();
+            Heap<Node> openSet = new Heap<Node>(grid.GetLength(0) * grid.GetLength(1));
+            HashSet<Node> closedSet = new HashSet<Node>();
 
-            closedSet.Add(currentRoom);
+            openSet.Add(startRoom);
 
-            if (currentRoom == endRoom)
+            while (openSet.Count > 0)
             {
-                return retracePath(startRoom, endRoom);
-            }
+                Node currentRoom = openSet.RemoveFirst();
 
-            foreach (Node neighbour in GetNeighbours(grid, currentRoom))
-            {
-                if (!neighbour.Walkable || closedSet.Contains(neighbour))
-                    continue;
+                closedSet.Add(currentRoom);
 
-                int newMovementCostToNeighbour = currentRoom.GCost + getDistance(currentRoom, neighbour);
-                if (newMovementCostToNeighbour < neighbour.GCost || !openSet.Contains(neighbour))
+                if (currentRoom == endRoom)
                 {
-                    neighbour.GCost = newMovementCostToNeighbour;
-                    neighbour.HCost = getDistance(neighbour, endRoom);
-                    neighbour.parent = currentRoom;
+                    return retracePath(startRoom, endRoom);
+                }
 
-                    if (!openSet.Contains(neighbour))
-                        openSet.Add(neighbour);
+                foreach (Node neighbour in GetNeighbours(grid, currentRoom))
+                {
+                    if (!neighbour.Walkable || closedSet.Contains(neighbour))
+                        continue;
+
+                    int newMovementCostToNeighbour = currentRoom.GCost + getDistance(currentRoom, neighbour);
+                    if (newMovementCostToNeighbour < neighbour.GCost || !openSet.Contains(neighbour))
+                    {
+                        neighbour.GCost = newMovementCostToNeighbour;
+                        neighbour.HCost = getDistance(neighbour, endRoom);
+                        neighbour.parent = currentRoom;
+
+                        if (!openSet.Contains(neighbour))
+                            openSet.Add(neighbour);
+                    }
                 }
             }
+            return null;
         }
-        return null;
-    }
 
-    private int getDistance(Node nodeA, Node nodeB)
-    {
-        int distanceX = Math.Abs(nodeA.Position.X - nodeB.Position.X);
-        int distanceY = Math.Abs(nodeA.Position.Y - nodeB.Position.Y);
-
-        if (distanceX > distanceY)
-            return 14 * distanceY + 10 * (distanceX - distanceY);
-        return 14 * distanceX + 10 * (distanceY - distanceX); ;
-    }
-
-    private List<Node> retracePath(Node startNode, Node targetRoom)
-    {
-        List<Node> path = new List<Node>();
-        Node currentNode = targetRoom;
-
-        while (currentNode != startNode)
+        private int getDistance(Node nodeA, Node nodeB)
         {
-            path.Add(currentNode);
-            currentNode = currentNode.parent;
+            int distanceX = Math.Abs(nodeA.Position.X - nodeB.Position.X);
+            int distanceY = Math.Abs(nodeA.Position.Y - nodeB.Position.Y);
+
+            if (distanceX > distanceY)
+                return 14 * distanceY + 10 * (distanceX - distanceY);
+            return 14 * distanceX + 10 * (distanceY - distanceX); ;
         }
-        path.Reverse();
-        return path;
-    }
 
-    private List<Node> GetNeighbours(Node[,] grid, Node node)
-    {
-        List<Node> neighbours = new List<Node>();            
-
-        for (int x = -1; x <= 1; x++)
+        private List<Node> retracePath(Node startNode, Node targetRoom)
         {
-            for (int y = -1; y <= 1; y++)
+            List<Node> path = new List<Node>();
+            Node currentNode = targetRoom;
+
+            while (currentNode != startNode)
             {
-                if (x == 0 && y == 0)
-                    continue;
-
-                int checkX = node.Position.X + x;
-                int checkY = node.Position.Y + y;
-
-                if (checkX >= 0 && checkX < grid.GetLength(0) && checkY >= 0 && checkY < grid.GetLength(1) && (checkX == node.Position.X || checkY == node.Position.Y))
-                    neighbours.Add(grid[checkX, checkY]);
+                path.Add(currentNode);
+                currentNode = currentNode.parent;
             }
+            path.Reverse();
+            return path;
         }
-        return neighbours;
+
+        private List<Node> GetNeighbours(Node[,] grid, Node node)
+        {
+            List<Node> neighbours = new List<Node>();
+
+            for (int x = -1; x <= 1; x++)
+            {
+                for (int y = -1; y <= 1; y++)
+                {
+                    if (x == 0 && y == 0)
+                        continue;
+
+                    int checkX = node.Position.X + x;
+                    int checkY = node.Position.Y + y;
+
+                    if (checkX >= 0 && checkX < grid.GetLength(0) && checkY >= 0 && checkY < grid.GetLength(1) && (checkX == node.Position.X || checkY == node.Position.Y))
+                        neighbours.Add(grid[checkX, checkY]);
+                }
+            }
+            return neighbours;
+        }
     }
 }
-

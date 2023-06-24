@@ -1,27 +1,30 @@
-internal class Node : IHeapItem<Node>
+namespace GridDungeonGenerator.Pathfinding
 {
-    internal int GCost;
-    internal int HCost;
-    internal int FCost { get { return GCost + HCost; } }
-    internal bool Walkable { get; set; }
-    internal Node parent { get; set; }
-    int heapIndex;
-    public int HeapIndex { get { return heapIndex; } set { heapIndex = value; } }
-    internal Coordinate Position { get; private set; }
-
-    internal Node(Coordinate position, bool walkable)
+    internal class Node : IHeapItem<Node>
     {
-        Position = position;
-        Walkable = walkable;
-    }
+        internal int GCost;
+        internal int HCost;
+        internal int FCost { get { return GCost + HCost; } }
+        internal bool Walkable { get; set; }
+        internal Node parent { get; set; }
+        int heapIndex;
+        public int HeapIndex { get { return heapIndex; } set { heapIndex = value; } }
+        internal Coordinate Position { get; private set; }
 
-    public int CompareTo(Node other)
-    {
-        int compare = FCost.CompareTo(other.FCost);
-        if (compare == 0)
+        internal Node(Coordinate position, bool walkable)
         {
-            compare = HCost.CompareTo(other.HCost);
+            Position = position;
+            Walkable = walkable;
         }
-        return -compare;
+
+        public int CompareTo(Node other)
+        {
+            int compare = FCost.CompareTo(other.FCost);
+            if (compare == 0)
+            {
+                compare = HCost.CompareTo(other.HCost);
+            }
+            return -compare;
+        }
     }
 }

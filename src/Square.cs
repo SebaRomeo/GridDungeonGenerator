@@ -1,9 +1,11 @@
-﻿namespace GridDungeonGenerator
+﻿using GridDungeonGenerator.Pathfinding;
+
+namespace GridDungeonGenerator
 {
     internal class Square
     {
         internal bool RoomPart = false;
-        internal bool IsPath = false;
+        internal bool IsWall = false;
         internal string RoomPartType = "";
         internal int X;
         internal int Y;
