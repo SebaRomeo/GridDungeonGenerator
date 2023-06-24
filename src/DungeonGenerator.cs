@@ -6,7 +6,6 @@
         private int _currentRoomMaxSize = 10;
         private int _attemps = 0;
 
-
         public Dungeon Generate(DungeonArgs args)
         {
             Dungeon dungeon = new Dungeon(args.DungeonSizeX, args.DungeonSizeY);
@@ -55,15 +54,16 @@
 
                 foreach (Square neighbour in neighbours)
                 {
-                    if (neighbour.RoomPart)
+                    if (neighbour.Type == SquareType.Room)
                     {
                         isNearRoom = true;
                         break;
                     }
                 }
-                square.IsWall = isNearRoom;
-            }
 
+                if (isNearRoom && square.Type == SquareType.Empty)
+                    square.Type = SquareType.Wall;
+            }
             return dungeon;
         }
     }

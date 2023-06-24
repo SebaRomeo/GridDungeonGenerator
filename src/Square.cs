@@ -2,11 +2,17 @@
 
 namespace GridDungeonGenerator
 {
+    public enum SquareType
+    {
+        Empty,
+        Room,
+        Wall
+    }
+
     internal class Square
     {
-        internal bool RoomPart = false;
-        internal bool IsWall = false;
-        internal string RoomPartType = "";
+        public SquareType Type = SquareType.Empty;
+        internal bool IsDoor;
         internal int X;
         internal int Y;
 

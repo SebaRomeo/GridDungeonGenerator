@@ -1,5 +1,13 @@
 ﻿namespace GridDungeonGenerator
 {
+    internal enum DoorPosition
+    {
+        TOP,
+        RIGHT,
+        DOWN,
+        LEFT
+    }
+
     internal class Door
     {
         internal List<Square> Entrances;
@@ -24,9 +32,9 @@
 
         internal List<Door> Doors = new List<Door>();
 
-        private List<string> _doorUsed = new List<string>
+        private List<DoorPosition> _doorUsed = new List<DoorPosition>
         {
-            Constants.TOP, Constants.RIGHT, Constants.DOWN, Constants.LEFT
+            DoorPosition.TOP, DoorPosition.RIGHT, DoorPosition.DOWN, DoorPosition.LEFT
         };
 
         internal Room(int originX, int originY, int width, int height)
@@ -45,7 +53,7 @@
 
         internal void AddSquare(Square square)
         {
-            square.RoomPart = true;
+            square.Type = SquareType.Room;
             _squares.Add(square);
         }
 
@@ -72,17 +80,17 @@
                 int doorBX = 0;
                 int doorBY = 0;
 
-                if (doorType == 0 && _doorUsed.Contains(Constants.TOP))
+                if (doorType == 0 && _doorUsed.Contains(DoorPosition.TOP))
                 {
-                    _doorUsed.Remove(Constants.TOP);
+                    _doorUsed.Remove(DoorPosition.TOP);
                     int doorPosition = _rnd.Next(1, Height - 2);
 
                     doorAY = doorPosition;
                     doorBY = doorPosition + 1;
                 }
-                else if (doorType == 1 && _doorUsed.Contains(Constants.DOWN))
+                else if (doorType == 1 && _doorUsed.Contains(DoorPosition.DOWN))
                 {
-                    _doorUsed.Remove(Constants.DOWN);
+                    _doorUsed.Remove(DoorPosition.DOWN);
                     int doorPosition = _rnd.Next(1, Height - 2);
 
                     doorAX = Width - 1;
@@ -91,9 +99,9 @@
                     doorAY = doorPosition;
                     doorBY = doorPosition + 1;
                 }
-                else if (doorType == 2 && _doorUsed.Contains(Constants.RIGHT))
+                else if (doorType == 2 && _doorUsed.Contains(DoorPosition.RIGHT))
                 {
-                    _doorUsed.Remove(Constants.RIGHT);
+                    _doorUsed.Remove(DoorPosition.RIGHT);
                     int doorPosition = _rnd.Next(1, Width - 2);
 
                     doorAX = doorPosition;
@@ -102,22 +110,20 @@
                     doorAY = Height - 1;
                     doorBY = Height - 1;
                 }
-                else if (doorType == 3 && _doorUsed.Contains(Constants.LEFT))
+                else
                 {
-                    _doorUsed.Remove(Constants.LEFT);
+                    _doorUsed.Remove(DoorPosition.LEFT);
                     int doorPosition = _rnd.Next(1, Width - 2);
 
                     doorAX = doorPosition;
                     doorBX = doorPosition + 1;
                 }
 
-                _squaresArray[doorAX, doorAY].RoomPartType = Constants.DOOR_TYPE;
-                _squaresArray[doorBX, doorBY].RoomPartType = Constants.DOOR_TYPE;
+                _squaresArray[doorAX, doorAY].IsDoor = true;
+                _squaresArray[doorBX, doorBY].IsDoor = true;
 
                 Doors.Add(new Door(_squaresArray[doorAX, doorAY], _squaresArray[doorBX, doorBY]));
-
                 DoorQuantity--;
-
             }
         }
     }

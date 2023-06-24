@@ -33,7 +33,7 @@ namespace GridDungeonGenerator
             {
                 for (int posY = 0; posY < height; posY++)
                 {
-                    if (Grid[originX + posX, originY + posY].RoomPart || Grid[originX + posX, originY + posY].Disabled)
+                    if (Grid[originX + posX, originY + posY].Type == SquareType.Room || Grid[originX + posX, originY + posY].Disabled)
                         return false;
                 }
             }
@@ -96,7 +96,7 @@ namespace GridDungeonGenerator
                 foreach (Node node in finalPath)
                 {
                     Grid[node.Position.X, node.Position.Y].Disabled = true;
-                    Grid[node.Position.X, node.Position.Y].RoomPart = true;
+                    Grid[node.Position.X, node.Position.Y].Type = SquareType.Room;
                 }
             }
         }
@@ -106,7 +106,7 @@ namespace GridDungeonGenerator
             Node[,] result = new Node[Grid.GetLength(0), Grid.GetLength(1)];
             foreach (Square square in Grid)
             {
-                if (square.RoomPart && square.RoomPartType != Constants.DOOR_TYPE) 
+                if (square.Type == SquareType.Room && !square.IsDoor) 
                 {
                     square.Node.Walkable = false;
                 }

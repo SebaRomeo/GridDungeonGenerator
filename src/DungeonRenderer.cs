@@ -9,20 +9,17 @@
                 for (int y = 0; y < dungeon.Grid.GetLength(1); y++)
                 {
                     Console.ResetColor();
-                    if (dungeon.Grid[x, y].RoomPart)
+                    if (dungeon.Grid[x, y].Type == SquareType.Room)
                     {
-                        if (dungeon.Grid[x, y].RoomPartType == "door")
-                            Console.ForegroundColor = ConsoleColor.Red;
-                        else
-                            Console.ForegroundColor = ConsoleColor.Red;
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write('#');
                     }
-                    else if (dungeon.Grid[x, y].IsWall)
+                    else if (dungeon.Grid[x, y].Type == SquareType.Wall)
                     {
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.Write('W');
                     }
-                    else
+                    else if (dungeon.Grid[x, y].Type == SquareType.Empty)
                         Console.Write(' ');
 
                     Console.Write(' ');
