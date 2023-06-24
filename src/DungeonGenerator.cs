@@ -12,12 +12,6 @@
 
         private int _attemps = 0;
 
-
-        public DungeonGenerator() 
-        { 
-
-        }
-
         public Dungeon Generate()
         {
             Console.WriteLine("Dungeon Generator");

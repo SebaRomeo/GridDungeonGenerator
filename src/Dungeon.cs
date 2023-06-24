@@ -55,7 +55,7 @@ namespace GridDungeonGenerator
                     }
                 }
             }
-            room.AssigneSquareType();
+            room.CreateDoors();
             Rooms.Add(room);
         }
 
@@ -67,31 +67,33 @@ namespace GridDungeonGenerator
 
             for (int i = 0; i < Rooms.Count - 1; i++)
             {
-                // Instead of use properties change the Door class for a list
-
                 Room startRoom = Rooms[i];
                 Room endRoom = Rooms[i + 1];
 
-                Door doorsA = startRoom.Doors[rnd.Next(startRoom.Doors.Count)];
-                Door doorsB = endRoom.Doors[rnd.Next(endRoom.Doors.Count)];
+                Door entrance = startRoom.Doors[rnd.Next(startRoom.Doors.Count)];
+                Door exit = endRoom.Doors[rnd.Next(endRoom.Doors.Count)];
 
-                Node startNodeA = NodesArray[doorsA.EntranceA.X, doorsA.EntranceA.Y];
-                Node endNodeA = NodesArray[doorsB.EntranceA.X, doorsB.EntranceA.Y];
+                List<Node> finalPath = new List<Node>();
 
-                List<Node> pathA = pathfinder.GetPath(NodesArray, startNodeA, endNodeA);
-
-                foreach (Node node in pathA)
+                for (int f = 0; f < entrance.Entrances.Count; f++)
                 {
-                    Grid[node.Position.X, node.Position.Y].Disabled = true;
-                    Grid[node.Position.X, node.Position.Y].RoomPart = true;
+                    Node startNode = NodesArray[entrance.Entrances[f].X, entrance.Entrances[f].Y];
+
+                    for (int c = 0; c < exit.Entrances.Count; c++)
+                    {
+                        Node endNode = NodesArray[exit.Entrances[c].X, exit.Entrances[c].Y];
+
+                        List<Node>? path = pathfinder.GetPath(NodesArray, startNode, endNode);
+
+                        if (path != null)
+                            foreach (Node node in path)
+                            {
+                                finalPath.Add(node);
+                            }
+                    }
                 }
 
-                Node startNodeB = NodesArray[doorsA.EntranceB.X, doorsA.EntranceB.Y];
-                Node endNodeB = NodesArray[doorsB.EntranceB.X, doorsB.EntranceB.Y];
-
-                List<Node> pathB = pathfinder.GetPath(NodesArray, startNodeB, endNodeB);
-
-                foreach (Node node in pathB)
+                foreach (Node node in finalPath)
                 {
                     Grid[node.Position.X, node.Position.Y].Disabled = true;
                     Grid[node.Position.X, node.Position.Y].RoomPart = true;
@@ -104,7 +106,7 @@ namespace GridDungeonGenerator
             Node[,] result = new Node[Grid.GetLength(0), Grid.GetLength(1)];
             foreach (Square square in Grid)
             {
-                if (square.RoomPart && square.RoomPartType != "door") 
+                if (square.RoomPart && square.RoomPartType != Constants.DOOR_TYPE) 
                 {
                     square.Node.Walkable = false;
                 }

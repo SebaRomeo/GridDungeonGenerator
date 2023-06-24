@@ -2,13 +2,13 @@ namespace GridDungeonGenerator.Pathfinding
 {
     internal class Node : IHeapItem<Node>
     {
+        public int HeapIndex { get { return heapIndex; } set { heapIndex = value; } }
         internal int GCost;
         internal int HCost;
         internal int FCost { get { return GCost + HCost; } }
         internal bool Walkable { get; set; }
         internal Node parent { get; set; }
         int heapIndex;
-        public int HeapIndex { get { return heapIndex; } set { heapIndex = value; } }
         internal Coordinate Position { get; private set; }
 
         internal Node(Coordinate position, bool walkable)
