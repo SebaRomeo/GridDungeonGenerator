@@ -4,12 +4,16 @@ internal class Program
 {
     static void Main(string[] args)
     {
-        for (int i = 0; i < 100; i++)
+        Console.WriteLine("Dungeon Generator");
+        Console.WriteLine("Press any key to generate or press Q to exit");
+        while (true)
         {
             DungeonGenerator dungeonGenerator = new DungeonGenerator();
             Dungeon dungeon = dungeonGenerator.Generate();
             DungeonRenderer.DrawDungeon(dungeon);
-            Console.ReadKey();
+
+            if (Console.ReadKey().Key == ConsoleKey.Q)
+                break;
         }
     }
 }

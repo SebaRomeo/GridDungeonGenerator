@@ -14,9 +14,6 @@
 
         public Dungeon Generate()
         {
-            Console.WriteLine("Dungeon Generator");
-            Console.WriteLine();
-
             Dungeon dungeon = new Dungeon(_dungeonSizeX, _dungeonSizeY);
             Random rnd = new Random();
 
