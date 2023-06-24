@@ -9,7 +9,7 @@ internal class Program
         while (true)
         {
             DungeonGenerator dungeonGenerator = new DungeonGenerator();
-            Dungeon dungeon = dungeonGenerator.Generate();
+            Dungeon dungeon = dungeonGenerator.Generate(new DungeonArgsBuilder().Build);
             DungeonRenderer.DrawDungeon(dungeon);
 
             if (Console.ReadKey().Key == ConsoleKey.Q)
