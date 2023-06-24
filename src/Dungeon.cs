@@ -37,7 +37,6 @@ namespace GridDungeonGenerator
                         return false;
                 }
             }
-
             return true;
         }
 

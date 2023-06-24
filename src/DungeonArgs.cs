@@ -9,10 +9,7 @@
         internal int DungeonSizeX = 30;
         internal int DungeonSizeY = 30;
 
-        internal DungeonArgs() 
-        { 
-
-        }
+        internal DungeonArgs() { }
     }
 
     public class DungeonArgsBuilder 
