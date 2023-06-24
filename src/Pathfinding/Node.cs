@@ -8,8 +8,8 @@ namespace GridDungeonGenerator.Pathfinding
         internal int FCost { get { return GCost + HCost; } }
         internal bool Walkable { get; set; }
         internal Node parent { get; set; }
-        int heapIndex;
         internal Coordinate Position { get; private set; }
+        private int heapIndex;
 
         internal Node(Coordinate position, bool walkable)
         {
