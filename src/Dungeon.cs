@@ -2,9 +2,9 @@
 
 namespace GridDungeonGenerator
 {
-    internal class Dungeon
+    public class Dungeon
     {
-        internal Square[,] Grid;
+        public Square[,] Grid { get; internal set; }
         internal List<Room> Rooms;
 
         internal Dungeon(int width, int height)

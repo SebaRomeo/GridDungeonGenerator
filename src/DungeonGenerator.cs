@@ -1,6 +1,6 @@
 ﻿namespace GridDungeonGenerator
 {
-    internal class DungeonGenerator
+    public class DungeonGenerator
     {
         private int _roomsCreated = 0;
         private int _currentRoomMaxSize = 10;

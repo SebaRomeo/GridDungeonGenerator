@@ -9,7 +9,7 @@ namespace GridDungeonGenerator
         Wall
     }
 
-    internal class Square
+    public class Square
     {
         public SquareType Type = SquareType.Empty;
         internal bool IsDoor;
